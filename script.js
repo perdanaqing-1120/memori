@@ -217,7 +217,7 @@ const finishBtn = document.getElementById('finishGameBtn');
 const errorMsg = document.getElementById('errorMessage');
 
 const wrongMessages = [
-    "Kode rahasianya salah ayang... 🥺 Coba tebak lagi ya!",
+    "Kode rahasianya salah ayanggggg... 🥺 Coba tebak lagi ya!",
     "Tetot! Masih salah nih.. Masa lupa tanggal spesial kita? 😜",
     "Aduh salah lagi 🥺 Clue: Tanggal jadian/spesial kita ❤️",
     "Masih belum tepat cintaa.. Jangan menyerah, coba lagi! 💕"
