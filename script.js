@@ -330,6 +330,10 @@ function checkCode() {
 // --- Confetti Logic ---
 function triggerConfetti() {
     const container = document.getElementById('confettiContainer');
+    
+    // Kosongkan confetti sebelumnya agar tidak menumpuk dan bikin berat
+    container.innerHTML = '';
+    
     const colors = ['#ff4d6d', '#ffb3c1', '#ffd166', '#06d6a0', '#118ab2'];
     
     for(let i=0; i<100; i++) {
@@ -375,16 +379,36 @@ function closeModal() {
     modal.classList.add('hidden');
 }
 
-function openMusicModal(title, audioSrc, coverSrc) {
+const lyricsData = {
+    'lagu1': '🎶 <i>Put your head on my shoulder...</i><br><br>Hold me in your arms, baby<br>Squeeze me oh-so-tight<br>Show me that you love me too',
+    'lagu2': '🎶 <i>I found a love for me...</i><br><br>Darling just dive right in<br>And follow my lead<br>Well I found a girl beautiful and sweet',
+    'lagu3': '🎶 <i>Cause all of me<br>Loves all of you</i><br><br>Love your curves and all your edges<br>All your perfect imperfections',
+    'lagu4': '🎶 <i>Take my hand, take my whole life too</i><br><br>For I can\'t help falling in love with you',
+    'lagu5': '🎶 <i>You\'re still the one I run to</i><br><br>The one that I belong to<br>You\'re still the one I want for life'
+};
+
+function openMusicModal(title, audioSrc, coverSrc, lyricsId = null) {
     const modal = document.getElementById('musicModal');
     const modalTitle = document.getElementById('musicModalTitle');
     const audioPlayer = document.getElementById('favAudioPlayer');
     const vinyl = document.getElementById('vinylRecord');
+    const lyricsContent = document.getElementById('musicLyricsContent');
     
     // Update content
     if(modalTitle) modalTitle.textContent = title;
     if(audioPlayer) audioPlayer.src = audioSrc;
     if(vinyl) vinyl.src = coverSrc;
+
+    if (lyricsContent) {
+        if (lyricsId && lyricsData[lyricsId]) {
+            lyricsContent.innerHTML = lyricsData[lyricsId];
+        } else {
+            lyricsContent.innerHTML = "<i>Lirik belum tersedia untuk lagu ini... 🎶</i>";
+        }
+    }
+    
+    // Reset view to vinyl
+    toggleMusicView('vinyl');
     
     // Show modal
     modal.classList.remove('hidden');
@@ -392,6 +416,31 @@ function openMusicModal(title, audioSrc, coverSrc) {
     // Auto play when opened
     if(audioPlayer) {
         audioPlayer.play().catch(e => console.log("Auto-play prevented", e));
+    }
+}
+
+function toggleMusicView(view) {
+    const vinylView = document.getElementById('vinylView');
+    const lyricsView = document.getElementById('lyricsView');
+    const btnVinyl = document.getElementById('btnVinyl');
+    const btnLyrics = document.getElementById('btnLyrics');
+
+    if (view === 'vinyl') {
+        vinylView.classList.remove('hidden-view');
+        vinylView.classList.add('active-view');
+        lyricsView.classList.remove('active-view');
+        lyricsView.classList.add('hidden-view');
+        
+        btnVinyl.classList.add('active');
+        btnLyrics.classList.remove('active');
+    } else {
+        lyricsView.classList.remove('hidden-view');
+        lyricsView.classList.add('active-view');
+        vinylView.classList.remove('active-view');
+        vinylView.classList.add('hidden-view');
+        
+        btnLyrics.classList.add('active');
+        btnVinyl.classList.remove('active');
     }
 }
 
