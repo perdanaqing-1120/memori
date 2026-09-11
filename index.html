@@ -42,22 +42,39 @@
             </div>
         </section>
 
-        <!-- Section 2: Carousel -->
+        <!-- Section 2: Single Photo Showcase & Celebration -->
         <section id="gallery" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism">
-                <h2 class="section-title">Our Beautiful Memories</h2>
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Images will be injected here via JS -->
-                    </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel(-1)"><i
-                            class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-btn next" onclick="moveCarousel(1)"><i
-                            class="fas fa-chevron-right"></i></button>
+            <div class="content-wrapper glassmorphism single-photo-card">
+                <!-- Festive Celebration Badge -->
+                <div class="celebration-badge">
+                    <i class="fas fa-crown"></i> The Birthday Girl <i class="fas fa-sparkles"></i>
                 </div>
-                <div class="carousel-indicators" id="carouselIndicators"></div>
-                <button class="primary-btn mt-4 pulse" onclick="nextScreen('gallery', 'game')">Next Surprise <i
-                        class="fas fa-arrow-right"></i></button>
+
+                <h2 class="section-title festive-title">Happy Birthday, My Love! ✨</h2>
+                <p class="subtitle festive-subtitle">Hari ini harimu yang paling istimewa ❤️</p>
+
+                <!-- Single Photo Showcase (Tap to celebrate burst) -->
+                <div class="single-photo-showcase" id="photoShowcase" onclick="celebrateBurst(event)" title="Sentuh untuk efek cinta & kembang api!">
+                    <div class="photo-glow-ring"></div>
+                    <div class="photo-frame">
+                        <!-- Ganti src jika ingin mengganti foto utama -->
+                        <img src="foto-utama.jpg" alt="Happy Birthday" class="hero-photo" id="heroPhoto" loading="eager">
+                        <div class="photo-shimmer"></div>
+                    </div>
+
+                    <!-- Floating Celebratory Stickers (Ringan dengan GPU translate3d) -->
+                    <span class="floating-sticker sticker-1" aria-hidden="true">🎂</span>
+                    <span class="floating-sticker sticker-2" aria-hidden="true">💖</span>
+                    <span class="floating-sticker sticker-3" aria-hidden="true">✨</span>
+                    <span class="floating-sticker sticker-4" aria-hidden="true">🎉</span>
+                </div>
+
+                <p class="tap-hint"><i class="fas fa-hand-pointer"></i> Sentuh foto untuk kejutan kembang api!</p>
+                <p class="photo-caption">"Semoga di usiamu yang baru ini selalu dipenuhi kebahagiaan, kesehatan, dan senyum yang tak pernah pudar."</p>
+
+                <button class="primary-btn mt-4 pulse festive-btn" onclick="nextScreen('gallery', 'game')">
+                    <span>Lanjut ke Kejutan</span> <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </section>
 
@@ -65,7 +82,7 @@
         <section id="game" class="screen hidden-screen">
             <div class="content-wrapper glassmorphism passcode-container">
                 <h2 class="section-title">Secret Code</h2>
-                <p class="subtitle">Tebak tanggal spesial kita untuk membuka kado!</p>
+                <p class="subtitle">Tebak tanggal spesial kamu untuk membuka kado!</p>
                 <div class="passcode-display">
                     <div class="dot" id="dot-1"></div>
                     <div class="dot" id="dot-2"></div>

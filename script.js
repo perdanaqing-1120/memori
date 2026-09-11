@@ -35,7 +35,9 @@ function nextScreen(currentId, nextId) {
         next.classList.add('active');
 
         // Trigger specific logic based on screen
-        if(nextId === 'menu-screen') {
+        if (nextId === 'gallery') {
+            triggerFestiveCelebration();
+        } else if (nextId === 'menu-screen') {
             triggerConfetti();
         }
     }, 800); // Wait for transition
@@ -60,62 +62,163 @@ function openEnvelope() {
 
     setTimeout(() => {
         nextScreen('welcome', 'gallery');
-    }, 2000);
+    }, 1800);
 }
 
-// --- Carousel Logic ---
-const photos = [
-    { url: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Our first date' },
-    { url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'That amazing vacation' },
-    { url: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'Silly moments together' },
-    { url: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', caption: 'I love your smile' }
-];
+// --- Festive Celebration Effects (Audio Fanfare & GPU Confetti Burst) ---
+function playCelebrationFanfare() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const now = ctx.currentTime;
+        
+        // Melodi perayaan ceria: C5, E5, G5, B5, C6 (chord arpeggio gembira)
+        const notes = [
+            { freq: 523.25, time: 0.00, dur: 0.18 },
+            { freq: 659.25, time: 0.11, dur: 0.18 },
+            { freq: 783.99, time: 0.22, dur: 0.20 },
+            { freq: 987.77, time: 0.33, dur: 0.22 },
+            { freq: 1046.50, time: 0.45, dur: 0.55 }
+        ];
 
-let currentSlideIndex = 0;
-const track = document.getElementById('carouselTrack');
-const indicatorsContainer = document.getElementById('carouselIndicators');
-
-function initCarousel() {
-    photos.forEach((photo, index) => {
-        // Create slide
-        const slide = document.createElement('div');
-        slide.classList.add('carousel-slide');
-        slide.innerHTML = `
-            <img src="${photo.url}" alt="${photo.caption}">
-            <div class="carousel-caption">${photo.caption}</div>
-        `;
-        track.appendChild(slide);
-
-        // Create indicator
-        const dot = document.createElement('div');
-        dot.classList.add('indicator');
-        if(index === 0) dot.classList.add('active');
-        dot.onclick = () => goToSlide(index);
-        indicatorsContainer.appendChild(dot);
-    });
+        notes.forEach(n => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(n.freq, now + n.time);
+            
+            gain.gain.setValueAtTime(0.12, now + n.time);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + n.time + n.dur);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + n.time);
+            osc.stop(now + n.time + n.dur);
+        });
+    } catch (e) {}
 }
 
-function updateCarousel() {
-    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-    
-    // Update indicators
-    const dots = document.querySelectorAll('.indicator');
-    dots.forEach((dot, index) => {
-        if(index === currentSlideIndex) dot.classList.add('active');
-        else dot.classList.remove('active');
-    });
+function playSparkleSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(1760, now + 0.16);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.16);
+    } catch (e) {}
 }
 
-function moveCarousel(direction) {
-    currentSlideIndex += direction;
-    if(currentSlideIndex < 0) currentSlideIndex = photos.length - 1;
-    if(currentSlideIndex >= photos.length) currentSlideIndex = 0;
-    updateCarousel();
+function triggerFestiveCelebration() {
+    playCelebrationFanfare();
+
+    // Confetti burst dari sisi kiri dan kanan bawah
+    const confettiCount = 38; // Jumlah ideal: sangat meriah tapi 100% smooth di HP
+    const colors = ['#ff4d6d', '#ff758f', '#ffd166', '#06d6a0', '#118ab2', '#a0c4ff', '#ffb703', '#ffffff'];
+    const emojis = ['💖', '✨', '🎉', '🌸', '⭐', '🎈'];
+
+    for (let i = 0; i < confettiCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('confetti-burst-particle');
+
+        const fromLeft = i % 2 === 0;
+        const startX = fromLeft ? (Math.random() * 25) : (75 + Math.random() * 25);
+        const startY = 85 + Math.random() * 10;
+        
+        particle.style.left = `${startX}vw`;
+        particle.style.top = `${startY}vh`;
+
+        const midX = (fromLeft ? 1 : -1) * (Math.random() * 120 + 40);
+        const midY = -(Math.random() * 320 + 260);
+        const endX = midX + (fromLeft ? 1 : -1) * (Math.random() * 80);
+        const endY = midY + Math.random() * 450 + 200;
+        const rot1 = (Math.random() * 360) + 'deg';
+        const rot2 = (Math.random() * 1080 - 540) + 'deg';
+
+        particle.style.setProperty('--mid-x', `${midX}px`);
+        particle.style.setProperty('--mid-y', `${midY}px`);
+        particle.style.setProperty('--end-x', `${endX}px`);
+        particle.style.setProperty('--end-y', `${endY}px`);
+        particle.style.setProperty('--rot1', rot1);
+        particle.style.setProperty('--rot2', rot2);
+
+        if (Math.random() > 0.6) {
+            particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            particle.style.fontSize = `${Math.random() * 12 + 14}px`;
+        } else {
+            const sizeW = Math.random() * 8 + 6;
+            const sizeH = Math.random() > 0.5 ? sizeW : Math.random() * 14 + 10;
+            particle.style.width = `${sizeW}px`;
+            particle.style.height = `${sizeH}px`;
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        }
+
+        const duration = (Math.random() * 0.8 + 2.2).toFixed(2);
+        const delay = (Math.random() * 0.35).toFixed(2);
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+
+        document.body.appendChild(particle);
+
+        // Self-cleaning: otomatis hapus node dari DOM setelah animasi selesai
+        particle.addEventListener('animationend', () => {
+            particle.remove();
+        }, { once: true });
+    }
 }
 
-function goToSlide(index) {
-    currentSlideIndex = index;
-    updateCarousel();
+// --- Interactive Tap Burst saat Foto Disentuh ---
+function celebrateBurst(event) {
+    playSparkleSound();
+
+    let clientX = event ? event.clientX : null;
+    let clientY = event ? event.clientY : null;
+
+    if (!clientX || !clientY) {
+        const target = document.getElementById('photoShowcase') || document.body;
+        const rect = target.getBoundingClientRect();
+        clientX = rect.left + rect.width / 2;
+        clientY = rect.top + rect.height / 2;
+    }
+
+    const emojis = ['💖', '✨', '🥰', '⭐', '🎉', '💕'];
+    const particleCount = 10;
+
+    for (let i = 0; i < particleCount; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'tap-sparkle';
+        sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+        const angle = (Math.PI * 2 / particleCount) * i + (Math.random() * 0.5 - 0.25);
+        const distance = Math.random() * 70 + 40;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+
+        sparkle.style.left = `${clientX}px`;
+        sparkle.style.top = `${clientY}px`;
+        sparkle.style.setProperty('--tx', `${tx}px`);
+        sparkle.style.setProperty('--ty', `${ty}px`);
+
+        document.body.appendChild(sparkle);
+
+        sparkle.addEventListener('animationend', () => {
+            sparkle.remove();
+        }, { once: true });
+    }
 }
 
 // --- Notification System ---
@@ -208,7 +311,7 @@ function playSuccessSound() {
 }
 
 // --- Passcode Game Logic ---
-const correctCode = "1510";
+const correctCode = "1209";
 let currentCode = "";
 let isCheckingCode = false;
 let wrongAttemptCount = 0;
@@ -469,7 +572,6 @@ window.onclick = function(event) {
 // --- Initialize App ---
 document.addEventListener('DOMContentLoaded', () => {
     createParticles();
-    initCarousel();
 
     // Vinyl animation sync with audio
     const audioPlayer = document.getElementById('favAudioPlayer');
