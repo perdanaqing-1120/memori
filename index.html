@@ -33,7 +33,7 @@
                 <div class="envelope">
                     <div class="flap"></div>
                     <div class="letter">
-                        <h1>Happy Birthdayy</h1>
+                        <h1>Happy Birthday</h1>
                         <p>To My Beautiful Girlfriendd</p>
                     </div>
                     <div class="envelope-body"></div>
@@ -42,22 +42,39 @@
             </div>
         </section>
 
-        <!-- Section 2: Carousel -->
+        <!-- Section 2: Single Photo Showcase & Celebration -->
         <section id="gallery" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism">
-                <h2 class="section-title">Our Beautiful Memories</h2>
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Images will be injected here via JS -->
-                    </div>
-                    <button class="carousel-btn prev" onclick="moveCarousel(-1)"><i
-                            class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-btn next" onclick="moveCarousel(1)"><i
-                            class="fas fa-chevron-right"></i></button>
+            <div class="content-wrapper glassmorphism single-photo-card">
+                <!-- Festive Celebration Badge -->
+                <div class="celebration-badge">
+                    <i class="fas fa-crown"></i> The Birthday Girl <i class="fas fa-sparkles"></i>
                 </div>
-                <div class="carousel-indicators" id="carouselIndicators"></div>
-                <button class="primary-btn mt-4 pulse" onclick="nextScreen('gallery', 'game')">Next Surprise <i
-                        class="fas fa-arrow-right"></i></button>
+
+                <h2 class="section-title festive-title">Happy Birthday, My Love! ✨</h2>
+                <p class="subtitle festive-subtitle">Hari ini harimu yang paling istimewa ❤️</p>
+
+                <!-- Single Photo Showcase (Tap to celebrate burst) -->
+                <div class="single-photo-showcase" id="photoShowcase" onclick="celebrateBurst(event)" title="Sentuh untuk efek cinta & kembang api!">
+                    <div class="photo-glow-ring"></div>
+                    <div class="photo-frame">
+                        <!-- Ganti src jika ingin mengganti foto utama -->
+                        <img src="foto-utama.jpg" alt="Happy Birthday" class="hero-photo" id="heroPhoto" loading="eager">
+                        <div class="photo-shimmer"></div>
+                    </div>
+
+                    <!-- Floating Celebratory Stickers (Ringan dengan GPU translate3d) -->
+                    <span class="floating-sticker sticker-1" aria-hidden="true">🎂</span>
+                    <span class="floating-sticker sticker-2" aria-hidden="true">💖</span>
+                    <span class="floating-sticker sticker-3" aria-hidden="true">✨</span>
+                    <span class="floating-sticker sticker-4" aria-hidden="true">🎉</span>
+                </div>
+
+                <p class="tap-hint"><i class="fas fa-hand-pointer"></i> Sentuh foto untuk kejutan kembang api!</p>
+                <p class="photo-caption">"Semoga di usiamu yang baru ini selalu dipenuhi kebahagiaan, kesehatan, dan senyum yang tak pernah pudar."</p>
+
+                <button class="primary-btn mt-4 pulse festive-btn" onclick="nextScreen('gallery', 'game')">
+                    <span>Lanjut ke Kejutan</span> <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </section>
 
@@ -65,7 +82,7 @@
         <section id="game" class="screen hidden-screen">
             <div class="content-wrapper glassmorphism passcode-container">
                 <h2 class="section-title">Secret Code</h2>
-                <p class="subtitle">Tebak tanggal spesial kita untuk membuka kado!</p>
+                <p class="subtitle">Tebak tanggal spesial kamu untuk membuka kado!</p>
                 <div class="passcode-display">
                     <div class="dot" id="dot-1"></div>
                     <div class="dot" id="dot-2"></div>
@@ -165,7 +182,7 @@
                     <h3 class="subsection-title">Lagu Favoritmu</h3>
                     <div class="music-list">
                         <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 1', 'lagu1.mp3', 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80')">
+                            onclick="openMusicModal('Lagu 1', 'lagu1.mp3', 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80', 'lagu1')">
                             <div class="vinyl-icon"><i class="fas fa-music"></i></div>
                             <div>
                                 <p class="music-title">Judul Lagu Pertama</p>
@@ -173,7 +190,7 @@
                             </div>
                         </div>
                         <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 2', 'lagu2.mp3', 'https://images.unsplash.com/photo-1493225457124-a1a2a5f56460?auto=format&fit=crop&w=400&q=80')">
+                            onclick="openMusicModal('Lagu 2', 'lagu2.mp3', 'https://images.unsplash.com/photo-1493225457124-a1a2a5f56460?auto=format&fit=crop&w=400&q=80', 'lagu2')">
                             <div class="vinyl-icon"><i class="fas fa-music"></i></div>
                             <div>
                                 <p class="music-title">Judul Lagu Kedua</p>
@@ -181,7 +198,7 @@
                             </div>
                         </div>
                         <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 3', 'lagu3.mp3', 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80')">
+                            onclick="openMusicModal('Lagu 3', 'lagu3.mp3', 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80', 'lagu3')">
                             <div class="vinyl-icon"><i class="fas fa-music"></i></div>
                             <div>
                                 <p class="music-title">Judul Lagu Ketiga</p>
@@ -189,7 +206,7 @@
                             </div>
                         </div>
                         <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 4', 'lagu4.mp3', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80')">
+                            onclick="openMusicModal('Lagu 4', 'lagu4.mp3', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80', 'lagu4')">
                             <div class="vinyl-icon"><i class="fas fa-music"></i></div>
                             <div>
                                 <p class="music-title">Judul Lagu Keempat</p>
@@ -197,7 +214,7 @@
                             </div>
                         </div>
                         <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 5', 'lagu5.mp3', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80')">
+                            onclick="openMusicModal('Lagu 5', 'lagu5.mp3', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80', 'lagu5')">
                             <div class="vinyl-icon"><i class="fas fa-music"></i></div>
                             <div>
                                 <p class="music-title">Judul Lagu Kelima</p>
@@ -247,11 +264,28 @@
             <div class="modal-content glassmorphism" style="text-align: center;">
                 <span class="close-modal" onclick="closeMusicModal()"><i class="fas fa-times"></i></span>
                 <h3 class="modal-title-music" id="musicModalTitle">Now Playing</h3>
-                <div class="vinyl-container">
-                    <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                        alt="Vinyl" class="vinyl-record" id="vinylRecord">
-                    <div class="vinyl-hole"></div>
+
+                <div class="music-tabs">
+                    <button id="btnVinyl" class="tab-btn active" onclick="toggleMusicView('vinyl')"><i
+                            class="fas fa-compact-disc"></i> Player</button>
+                    <button id="btnLyrics" class="tab-btn" onclick="toggleMusicView('lyrics')"><i
+                            class="fas fa-align-center"></i> Lirik</button>
                 </div>
+
+                <div id="vinylView" class="view-section active-view">
+                    <div class="vinyl-container">
+                        <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                            alt="Vinyl" class="vinyl-record" id="vinylRecord">
+                        <div class="vinyl-hole"></div>
+                    </div>
+                </div>
+
+                <div id="lyricsView" class="view-section hidden-view">
+                    <div class="lyrics-container">
+                        <p id="musicLyricsContent">Lirik belum tersedia...</p>
+                    </div>
+                </div>
+
                 <audio controls class="fav-audio mt-4" id="favAudioPlayer">
                     Browser Anda tidak mendukung pemutar audio.
                 </audio>
