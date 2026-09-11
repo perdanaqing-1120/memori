@@ -1,257 +1,537 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, My Love</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#fff0f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Happy Birthday, My Love | Special Celebration</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts -->
+
+    <!-- Google Fonts: Romantic Luxury Modern Serif & Clean Mobile Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <!-- FontAwesome for icons -->
+
+    <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <!-- Audio Player (Ganti src dengan nama file lagu Anda) -->
-    <audio id="bgMusic" loop>
-        <source src="lagu.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Master Playlist Audio Engine (Auto-Next & Shuffle Enabled) -->
+    <audio id="bgMusic" src="semua-aku-dirayakan.mp3" preload="auto"></audio>
 
-    <div id="app">
+    <!-- Lightweight Background Starlight Canvas -->
+    <canvas id="starlightCanvas" class="starlight-canvas"></canvas>
+
+    <!-- Floating Mobile Music Pill -->
+    <header class="floating-hud">
+        <button class="hud-pill music-hud" id="musicHud" onclick="toggleAmbientMusic()" aria-label="Play or Pause Music">
+            <div class="hud-music-icon"><i class="fas fa-music" id="hudPlayIcon"></i></div>
+            <div class="hud-equalizer" id="hudEqualizer">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+                <span class="bar bar-4"></span>
+            </div>
+            <span class="hud-music-text" id="hudMusicText">Semua Aku Dirayakan</span>
+        </button>
+    </header>
+
+    <!-- Main Mobile Application Viewport -->
+    <main id="app">
         <!-- Toast Notification Container -->
         <div id="toastContainer" class="toast-container"></div>
 
-        <!-- Background Hearts/Particles -->
+        <!-- Lightweight Floating Heart Accents -->
         <div class="background-particles" id="particles"></div>
 
-        <!-- Section 1: Welcome -->
+        <!-- ==========================================
+             SECTION 1: 3D WAX SEAL ENVELOPE (MOBILE)
+             ========================================== -->
         <section id="welcome" class="screen active">
-            <div class="envelope-container" onclick="openEnvelope()">
-                <div class="envelope">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <h1>Happy Birthday</h1>
-                        <p>To My Beautiful Girlfriendd</p>
+            <div class="envelope-scene">
+                <div class="envelope-container" id="envelopeWrapper" onclick="openEnvelope()"
+                    title="Ketuk untuk membuka amplop cinta!">
+                    <div class="envelope-glow-aura"></div>
+                    <div class="envelope" id="mainEnvelope">
+                        <div class="flap"></div>
+                        <div class="letter">
+                            <div class="letter-inner-border">
+                                <span class="letter-seal-icon"><i class="fas fa-heart"></i></span>
+                                <h1 class="letter-title">Happy Birthday</h1>
+                                <div class="letter-divider"><span>✦ ✨ ✦</span></div>
+                                <p class="letter-recipient">To The Most Beautiful Girl in the World</p>
+                                <p class="letter-subtext">Sentuhan cinta untuk hari terindahmu ❤️</p>
+                            </div>
+                        </div>
+                        <div class="envelope-body"></div>
+
+                        <!-- 3D Realistic Wax Seal -->
+                        <div class="wax-seal" id="waxSeal">
+                            <div class="wax-seal-inner">
+                                <i class="fas fa-heart seal-heart"></i>
+                                <span class="wax-seal-text">FOR YOU</span>
+                            </div>
+                            <div class="wax-shine"></div>
+                        </div>
                     </div>
-                    <div class="envelope-body"></div>
                 </div>
-                <p class="click-hint">Tap to Open <i class="fas fa-heart pulse"></i></p>
+
+                <p class="click-hint" id="envelopeHint">
+                    <i class="fas fa-sparkles"></i> Sentuh segel lilin untuk membuka <i class="fas fa-heart pulse"></i>
+                </p>
             </div>
         </section>
 
-        <!-- Section 2: Single Photo Showcase & Celebration -->
+        <!-- ==========================================
+             SECTION 2: THE BIRTHDAY QUEEN SHOWCASE (MOBILE)
+             ========================================== -->
         <section id="gallery" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism single-photo-card">
-                <!-- Festive Celebration Badge -->
-                <div class="celebration-badge">
-                    <i class="fas fa-crown"></i> The Birthday Girl <i class="fas fa-sparkles"></i>
+            <div class="content-wrapper glassmorphism single-photo-card" id="heroTiltCard">
+                <!-- Floating Celebration Stickers -->
+                <span class="floating-sticker sticker-1" aria-hidden="true">🎂</span>
+                <span class="floating-sticker sticker-2" aria-hidden="true">💖</span>
+                <span class="floating-sticker sticker-3" aria-hidden="true">✨</span>
+                <span class="floating-sticker sticker-4" aria-hidden="true">👑</span>
+
+                <!-- Celebration Crown Badge -->
+                <div class="celebration-badge" id="birthdayQueenBadge">
+                    <i class="fas fa-crown gold-crown"></i> The Birthday Queen <i class="fas fa-sparkles"></i>
                 </div>
 
                 <h2 class="section-title festive-title">Happy Birthday, My Love! ✨</h2>
                 <p class="subtitle festive-subtitle">Hari ini harimu yang paling istimewa ❤️</p>
 
-                <!-- Single Photo Showcase (Tap to celebrate burst) -->
-                <div class="single-photo-showcase" id="photoShowcase" onclick="celebrateBurst(event)" title="Sentuh untuk efek cinta & kembang api!">
+                <!-- Single Photo Showcase -->
+                <div class="single-photo-showcase" id="photoShowcase" onclick="celebrateBurst(event)"
+                    title="Sentuh untuk efek cinta!">
                     <div class="photo-glow-ring"></div>
                     <div class="photo-frame">
-                        <!-- Ganti src jika ingin mengganti foto utama -->
-                        <img src="foto-utama.jpg" alt="Happy Birthday" class="hero-photo" id="heroPhoto" loading="eager">
+                        <img src="foto-utama.webp" alt="The Birthday Queen" class="hero-photo" id="heroPhoto"
+                            loading="eager" onerror="this.src='foto-utama.jpg'">
                         <div class="photo-shimmer"></div>
                     </div>
 
-                    <!-- Floating Celebratory Stickers (Ringan dengan GPU translate3d) -->
-                    <span class="floating-sticker sticker-1" aria-hidden="true">🎂</span>
-                    <span class="floating-sticker sticker-2" aria-hidden="true">💖</span>
-                    <span class="floating-sticker sticker-3" aria-hidden="true">✨</span>
-                    <span class="floating-sticker sticker-4" aria-hidden="true">🎉</span>
+                    <!-- Micro Floating Badges -->
+                    <div class="photo-pill-badge left-pill"><i class="fas fa-star"></i> 1 in 8 Billion</div>
+                    <div class="photo-pill-badge right-pill"><i class="fas fa-infinity"></i> Forever & Always</div>
                 </div>
 
-                <p class="tap-hint"><i class="fas fa-hand-pointer"></i> Sentuh foto untuk kejutan kembang api!</p>
-                <p class="photo-caption">"Semoga di usiamu yang baru ini selalu dipenuhi kebahagiaan, kesehatan, dan senyum yang tak pernah pudar."</p>
+                <p class="tap-hint"><i class="fas fa-hand-pointer"></i> Sentuh foto untuk pesta kembang api!</p>
+
+                <div class="quote-box">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="photo-caption">"Semoga di usiamu yang baru selalu dipenuhi tawa lepas, kesehatan, impian
+                        yang terwujud, dan senyuman yang selalu manis."</p>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
 
                 <button class="primary-btn mt-4 pulse festive-btn" onclick="nextScreen('gallery', 'game')">
-                    <span>Lanjut ke Kejutan</span> <i class="fas fa-arrow-right"></i>
+                    <span>Buka Brankas Rahasia</span> <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
 
-        <!-- Section 3: Game -->
+        <!-- ==========================================
+             SECTION 3: PASSCODE VAULT (MOBILE ERGONOMIC)
+             ========================================== -->
         <section id="game" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism passcode-container">
-                <h2 class="section-title">Secret Code</h2>
-                <p class="subtitle">Tebak tanggal spesial kamu untuk membuka kado!</p>
+            <div class="content-wrapper glassmorphism passcode-container" id="passcodeCard">
+                <div class="vault-scanner" id="vaultScanner"></div>
+                <div class="vault-icon-header">
+                    <div class="vault-lock-orb" id="vaultLockOrb"><i class="fas fa-lock" id="vaultLockIcon"></i></div>
+                </div>
+
+                <h2 class="section-title">Secret Code Vault</h2>
+                <p class="subtitle">Tebak 4 digit tanggal spesial kita untuk membuka kado! 🔒</p>
+
                 <div class="passcode-display">
-                    <div class="dot" id="dot-1"></div>
-                    <div class="dot" id="dot-2"></div>
-                    <div class="dot" id="dot-3"></div>
-                    <div class="dot" id="dot-4"></div>
+                    <div class="dot" id="dot-1"><i class="fas fa-heart dot-inner-heart"></i></div>
+                    <div class="dot" id="dot-2"><i class="fas fa-heart dot-inner-heart"></i></div>
+                    <div class="dot" id="dot-3"><i class="fas fa-heart dot-inner-heart"></i></div>
+                    <div class="dot" id="dot-4"><i class="fas fa-heart dot-inner-heart"></i></div>
                 </div>
+
                 <div class="keypad">
-                    <button class="key-btn" onclick="pressKey(1)">1</button>
-                    <button class="key-btn" onclick="pressKey(2)">2</button>
-                    <button class="key-btn" onclick="pressKey(3)">3</button>
-                    <button class="key-btn" onclick="pressKey(4)">4</button>
-                    <button class="key-btn" onclick="pressKey(5)">5</button>
-                    <button class="key-btn" onclick="pressKey(6)">6</button>
-                    <button class="key-btn" onclick="pressKey(7)">7</button>
-                    <button class="key-btn" onclick="pressKey(8)">8</button>
-                    <button class="key-btn" onclick="pressKey(9)">9</button>
-                    <button class="key-btn clear-btn" onclick="clearCode()"><i class="fas fa-times"></i></button>
-                    <button class="key-btn" onclick="pressKey(0)">0</button>
-                    <button class="key-btn delete-btn" onclick="deleteKey()"><i class="fas fa-backspace"></i></button>
+                    <button class="key-btn" onclick="pressKey(1)"><span>1</span></button>
+                    <button class="key-btn" onclick="pressKey(2)"><span>2</span></button>
+                    <button class="key-btn" onclick="pressKey(3)"><span>3</span></button>
+                    <button class="key-btn" onclick="pressKey(4)"><span>4</span></button>
+                    <button class="key-btn" onclick="pressKey(5)"><span>5</span></button>
+                    <button class="key-btn" onclick="pressKey(6)"><span>6</span></button>
+                    <button class="key-btn" onclick="pressKey(7)"><span>7</span></button>
+                    <button class="key-btn" onclick="pressKey(8)"><span>8</span></button>
+                    <button class="key-btn" onclick="pressKey(9)"><span>9</span></button>
+                    <button class="key-btn action-key clear-btn" onclick="clearCode()" title="Reset"><i
+                            class="fas fa-undo-alt"></i></button>
+                    <button class="key-btn" onclick="pressKey(0)"><span>0</span></button>
+                    <button class="key-btn action-key delete-btn" onclick="deleteKey()" title="Hapus"><i
+                            class="fas fa-backspace"></i></button>
                 </div>
+
+                <div class="passcode-actions">
+                    <button class="hint-btn" onclick="showPasscodeHint()"><i class="fas fa-lightbulb"></i> Butuh
+                        Petunjuk?</button>
+                </div>
+
                 <p id="errorMessage" class="error-msg hidden">Kode salah. Coba lagi!</p>
+
                 <button id="finishGameBtn" class="primary-btn hidden mt-4 pulse"
-                    onclick="nextScreen('game', 'menu-screen')">Buka Kado <i class="fas fa-gift"></i></button>
+                    onclick="nextScreen('game', 'menu-screen')">
+                    <span>Buka Kado Spesial</span> <i class="fas fa-gift"></i>
+                </button>
             </div>
         </section>
 
-        <!-- Section 4: Menu Screen -->
+        <!-- ==========================================
+             SECTION 4: MOBILE BENTO SURPRISE HUB
+             ========================================== -->
         <section id="menu-screen" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism">
+            <div class="content-wrapper glassmorphism bento-menu-wrapper">
+                <div class="celebration-badge"><i class="fas fa-sparkles"></i> Akses Terbuka! <i
+                        class="fas fa-sparkles"></i></div>
                 <h2 class="section-title">Surprise Unlocked!</h2>
-                <p class="subtitle">Pilih hadiah yang ingin kamu lihat duluan yaaa ❤️</p>
-                <div class="menu-options">
-                    <button class="primary-btn" onclick="nextScreen('menu-screen', 'love-letter')"><i
-                            class="fas fa-envelope-open-text"></i> Kartu Ucapan</button>
-                    <button class="primary-btn" onclick="nextScreen('menu-screen', 'memory-slide')"><i
-                            class="fas fa-images"></i> Memory Kita</button>
-                    <button class="primary-btn" onclick="nextScreen('menu-screen', 'fav-slide')"><i
-                            class="fas fa-star"></i> Kesukaanmu</button>
+                <p class="subtitle">Pilih kado spesial yang ingin kamu lihat duluan yaaa ❤️</p>
+
+                <div class="bento-grid">
+                    <!-- Bento Card 1: Surat Cinta -->
+                    <div class="bento-card bento-letter" onclick="nextScreen('menu-screen', 'love-letter')">
+                        <div class="bento-header-row">
+                            <div class="bento-icon-box"><i class="fas fa-envelope-open-text"></i></div>
+                            <div class="bento-badge">Paling Romantis 💌</div>
+                        </div>
+                        <div class="bento-text">
+                            <h3>Surat & Video Cinta</h3>
+                            <p>Pesan tulus dari lubuk hati dan ucapan video terindah.</p>
+                        </div>
+                        <div class="bento-action-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+
+                    <!-- Bento Card 2: Memory Kita -->
+                    <div class="bento-card bento-memory" onclick="nextScreen('menu-screen', 'memory-slide')">
+                        <div class="bento-header-row">
+                            <div class="bento-icon-box"><i class="fas fa-images"></i></div>
+                            <div class="bento-badge">Foto Kenangan 📸</div>
+                        </div>
+                        <div class="bento-text">
+                            <h3>Vault Memori Kita</h3>
+                            <p>Kumpulan potret tawa lepas, kencan manis, dan momen berdua.</p>
+                        </div>
+                        <div class="bento-action-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+
+                    <!-- Bento Card 3: Kesukaanmu -->
+                    <div class="bento-card bento-favorites" onclick="nextScreen('menu-screen', 'fav-slide')">
+                        <div class="bento-header-row">
+                            <div class="bento-icon-box"><i class="fas fa-compact-disc"></i></div>
+                            <div class="bento-badge">Playlist Cinta 🎵</div>
+                        </div>
+                        <div class="bento-text">
+                            <h3>Turntable & Hal Kesukaan</h3>
+                            <p>Pemutar piringan hitam lagu cinta dan hal yang bikin kamu senyum.</p>
+                        </div>
+                        <div class="bento-action-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
                 </div>
             </div>
             <div class="confetti-container" id="confettiContainer"></div>
         </section>
 
-        <!-- Section 5: Love Letter -->
+        <!-- ==========================================
+             SECTION 5: CINEMATIC LOVE LETTER & VIDEO
+             ========================================== -->
         <section id="love-letter" class="screen hidden-screen">
-            <div class="letter-card glassmorphism">
-                <div class="video-wrapper">
-                    <!-- Ganti src dengan file video ucapan Anda -->
-                    <video controls class="greeting-video">
-                        <source src="vidio-ucapan.mp4" type="video/mp4">
-                        Browser Anda tidak mendukung pemutar video.
-                    </video>
+            <div class="content-wrapper glassmorphism letter-card-container">
+                <div class="letter-card">
+                    <div class="letter-ornament">
+                        <span>✦</span> <span>♥</span> <span>✦</span>
+                    </div>
+
+                    <div class="video-cinema-frame">
+                        <div class="video-wrapper">
+                            <video controls class="greeting-video" id="greetingVideo" poster="assets/video/video-poster.webp"
+                                playsinline preload="metadata">
+                                <source src="assets/video/vidio-ucapan-stream.mp4" type="video/mp4">
+                                <source src="vidio-ucapan.mp4" type="video/mp4">
+                                Browser Anda tidak mendukung pemutar video.
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="parchment-letter">
+                        <div class="parchment-header">
+                            <h2 class="letter-salutation">My Dearest,</h2>
+                            <span class="letter-date" id="letterDate">Happy Birthday Day</span>
+                        </div>
+
+                        <div class="letter-paragraphs">
+                            <p>Happy Birthday to the most amazing, kind-hearted, and beautiful girl in the world! Every
+                                single moment with you is a treasure that I hold so dearly close to my heart.</p>
+                            <p>Terima kasih sudah selalu hadir, menemani hari-hariku dengan tawamu yang manis, dan
+                                membuat setiap hal biasa menjadi begitu istimewa saat bersamamu. Aku sangat bersyukur
+                                memilikimu dalam hidupku.</p>
+                            <p>Di usiamu yang baru ini, aku berdoa agar setiap impianmu tercapai, langkahmu selalu
+                                dipermudah, dan kamu selalu dikelilingi kebahagiaan yang melimpah. Aku akan selalu ada
+                                di sampingmu untuk mendukung dan mencintaimu, hari ini dan selamanya.</p>
+                        </div>
+
+                        <div class="letter-signature-block">
+                            <div class="letter-wax-stamp"><i class="fas fa-heart"></i></div>
+                            <div>
+                                <p class="signature-note">With all my love & whole heart,</p>
+                                <p class="signature">Yours Always ❤️</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="primary-btn back-btn" onclick="nextScreen('love-letter', 'menu-screen')">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                    </button>
                 </div>
-                <h2>My Dearest,</h2>
-                <p>Happy Birthday to the most amazing girl in the world! Every moment with you is a treasure, and I'm so
-                    lucky to call you mine. I hope this special day brings you as much joy as you bring into my life.
-                </p>
-                <p>Here's to many more adventures together, endless laughter, and beautiful memories.</p>
-                <p class="signature">With all my love,<br>❤️</p>
-                <button class="primary-btn back-btn mt-4" onclick="nextScreen('love-letter', 'menu-screen')"><i
-                        class="fas fa-arrow-left"></i> Kembali ke Menu</button>
             </div>
         </section>
 
-        <!-- Section 6: Memory -->
+        <!-- ==========================================
+             SECTION 6: OUR MEMORY VAULT (LIGHTWEIGHT WEBP)
+             ========================================== -->
         <section id="memory-slide" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism">
-                <h2 class="section-title">Our Memories</h2>
-                <p class="subtitle">Tempat semua kenangan indah kita tersimpan 📸</p>
-                <div class="memory-grid">
-                    <!-- Ganti src dengan foto-foto kenangan kalian -->
-                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83164ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                        alt="Memory 1" class="clickable-img" onclick="openModal(this)" data-title="First Date 👩‍❤️‍👨"
-                        data-desc="Hari di mana semua kisah indah ini dimulai.">
-                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                        alt="Memory 2" class="clickable-img" onclick="openModal(this)" data-title="Liburan Bareng 🏖️"
-                        data-desc="Momen seru saat kita jalan-jalan berdua.">
-                    <img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                        alt="Memory 3" class="clickable-img" onclick="openModal(this)" data-title="Momen Kocak 🤣"
-                        data-desc="Cuma kamu yang bisa bikin aku ketawa lepas kayak gini.">
-                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                        alt="Memory 4" class="clickable-img" onclick="openModal(this)" data-title="Senyum Manismu ✨"
-                        data-desc="Tolong terus senyum kaya gini ya, love you!">
+            <div class="content-wrapper glassmorphism memory-wrapper">
+                <h2 class="section-title">Our Memory Vault</h2>
+                <p class="subtitle">Tempat setiap senyum, tawa, dan kenangan indah kita tersimpan 📸</p>
+
+                <!-- Filter Tabs -->
+                <div class="gallery-filter-tabs">
+                    <button class="filter-tab active" onclick="filterGallery('all', this)">Semua ✨</button>
+                    <button class="filter-tab" onclick="filterGallery('dates', this)">Sweet Dates ☕</button>
+                    <button class="filter-tab" onclick="filterGallery('fun', this)">Momen Seru 🤣</button>
+                    <button class="filter-tab" onclick="filterGallery('fav', this)">Favorit 💖</button>
                 </div>
-                <button class="primary-btn back-btn mt-4" onclick="nextScreen('memory-slide', 'menu-screen')"><i
-                        class="fas fa-arrow-left"></i> Kembali ke Menu</button>
+
+                <div class="memory-grid" id="memoryGrid">
+                    <!-- Polaroid 1 -->
+                    <div class="polaroid-card" data-category="dates" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/DSC_0026.webp" alt="" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/DSC_0026.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" 👩‍❤️‍👨"
+                            data-desc="15-Agustus-2026"
+                            👩‍❤️‍👨</p>
+                    </div>
+
+                    <!-- Polaroid 2 -->
+                    <div class="polaroid-card" data-category="fav" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/DSC_0042.webp" alt="" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/DSC_0042.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=""
+                            data-desc="18-Desember-2026"> </p>
+                    </div>
+
+                    <!-- Polaroid 3 -->
+                    <div class="polaroid-card" data-category="fun" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/DSC_0089.webp" alt="Momen Kocak" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/DSC_0089.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="17-oktober-2026"> </p>
+                    </div>
+
+                    <!-- Polaroid 4 -->
+                    <div class="polaroid-card" data-category="dates" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/DSC_0168.webp" alt="Liburan Berdua" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/DSC_0168.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="kemarin lusa wkwk."> 
+                        </p>
+                    </div>
+
+                    <!-- Polaroid 5 -->
+                    <div class="polaroid-card" data-category="fav" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/IMG_2641.webp" alt="Hangout Cantik" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/IMG_2641.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="kemarin lusa wkwk."> 
+                        </p>
+                    </div>
+
+                    <!-- Polaroid 6 -->
+                    <div class="polaroid-card" data-category="fun" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/IMG_2684.webp" alt="Gemas Banget" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/IMG_2684.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="kemarin lusa wkwk!"> </p>
+                    </div>
+
+                    <!-- Polaroid 7 -->
+                    <div class="polaroid-card" data-category="dates" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/IMG_6654.webp" alt="" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/IMG_6654.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="17-oktober-2026.">
+                            </p>
+                    </div>
+
+                    <!-- Polaroid 8 -->
+                    <div class="polaroid-card" data-category="fav" onclick="openPhotoModal(this)">
+                        <div class="polaroid-tape"></div>
+                        <div class="polaroid-img-wrapper">
+                            <img src="thumbnails/Shessh.webp" alt="Cool & Pretty" class="polaroid-img" loading="lazy"
+                                onerror="this.src='best folder/Shessh.JPG'">
+                        </div>
+                        <p class="polaroid-caption" data-title=" "
+                            data-desc="17-oktober-2026!"> </p>
+                    </div>
+                </div>
+
+                <button class="primary-btn back-btn" onclick="nextScreen('memory-slide', 'menu-screen')">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                </button>
             </div>
         </section>
 
-        <!-- Section 7: Fav Items -->
+        <!-- ==========================================
+             SECTION 7: TURNTABLE & HER FAVORITES
+             ========================================== -->
         <section id="fav-slide" class="screen hidden-screen">
-            <div class="content-wrapper glassmorphism">
+            <div class="content-wrapper glassmorphism fav-split-wrapper">
                 <h2 class="section-title">Your Favorites</h2>
-                <p class="subtitle">Hal-hal yang selalu bikin kamu senyum 🎶🧸</p>
+                <p class="subtitle">Irama melodi cinta dan hal-hal yang selalu bikin harimu ceria 🎶🧸</p>
 
-                <div class="fav-section-split w-100 mt-4">
-                    <h3 class="subsection-title">Lagu Favoritmu</h3>
-                    <div class="music-list">
-                        <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 1', 'lagu1.mp3', 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80', 'lagu1')">
-                            <div class="vinyl-icon"><i class="fas fa-music"></i></div>
-                            <div>
-                                <p class="music-title">Judul Lagu Pertama</p>
-                                <p class="music-artist">Nama Penyanyi</p>
-                            </div>
+                <!-- 3D Realistic Turntable Deck -->
+                <div class="turntable-deck">
+                    <div class="turntable-view-container">
+                        <div class="vinyl-platter">
+                            <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&w=300&q=80"
+                                alt="Vinyl Record" class="vinyl-record" id="vinylRecord">
+                            <div class="vinyl-hole"></div>
                         </div>
-                        <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 2', 'lagu2.mp3', 'https://images.unsplash.com/photo-1493225457124-a1a2a5f56460?auto=format&fit=crop&w=400&q=80', 'lagu2')">
-                            <div class="vinyl-icon"><i class="fas fa-music"></i></div>
-                            <div>
-                                <p class="music-title">Judul Lagu Kedua</p>
-                                <p class="music-artist">Nama Penyanyi</p>
-                            </div>
-                        </div>
-                        <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 3', 'lagu3.mp3', 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80', 'lagu3')">
-                            <div class="vinyl-icon"><i class="fas fa-music"></i></div>
-                            <div>
-                                <p class="music-title">Judul Lagu Ketiga</p>
-                                <p class="music-artist">Nama Penyanyi</p>
-                            </div>
-                        </div>
-                        <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 4', 'lagu4.mp3', 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80', 'lagu4')">
-                            <div class="vinyl-icon"><i class="fas fa-music"></i></div>
-                            <div>
-                                <p class="music-title">Judul Lagu Keempat</p>
-                                <p class="music-artist">Nama Penyanyi</p>
-                            </div>
-                        </div>
-                        <div class="music-trigger"
-                            onclick="openMusicModal('Lagu 5', 'lagu5.mp3', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80', 'lagu5')">
-                            <div class="vinyl-icon"><i class="fas fa-music"></i></div>
-                            <div>
-                                <p class="music-title">Judul Lagu Kelima</p>
-                                <p class="music-artist">Nama Penyanyi</p>
-                            </div>
+
+                        <!-- Pivoting Tonearm -->
+                        <div class="turntable-tonearm" id="turntableTonearm">
+                            <div class="tonearm-base"></div>
+                            <div class="tonearm-rod"></div>
+                            <div class="tonearm-head"></div>
                         </div>
                     </div>
 
-                    <h3 class="subsection-title mt-4">Barang Kesukaanmu</h3>
-                    <div class="fav-items-grid">
-                        <div class="fav-item clickable-img" onclick="openModal(this.querySelector('img'))">
-                            <img src="https://images.unsplash.com/photo-1558981420-c532902e58b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                                alt="Bunga" data-title="Bunga Matahari 🌻"
-                                data-desc="Bunga cerah secerah senyummu yang selalu bikin hari-hariku bahagia.">
-                            <p>Bunga Matahari</p>
+                    <!-- Live Equalizer Visualizer -->
+                    <div class="turntable-visualizer" id="turntableVisualizer">
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                        <span class="vis-bar"></span>
+                    </div>
+                </div>
+
+                <!-- Music Selection List & Controls -->
+                <div class="playlist-header-box">
+                    <div class="playlist-title-wrap">
+                        <h3 class="subsection-title mb-0"><i class="fas fa-music"></i> Playlist Cinta Buat Kamu</h3>
+                        <p class="playlist-subtitle">Auto-putar berlanjut • Mode Acak (Shuffle)</p>
+                    </div>
+                    <div class="playlist-controls-row">
+                        <button class="playlist-action-btn" id="btnShuffle" onclick="toggleShuffle()" title="Putar Acak (Shuffle)">
+                            <i class="fas fa-shuffle"></i> <span id="shuffleLabel">Acak: OFF</span>
+                        </button>
+                        <button class="playlist-action-btn" onclick="playPrevTrack()" title="Lagu Sebelumnya">
+                            <i class="fas fa-backward-step"></i>
+                        </button>
+                        <button class="playlist-action-btn play-pause-btn" id="btnPlayPausePlaylist" onclick="toggleAmbientMusic()" title="Putar / Jeda">
+                            <i class="fas fa-play" id="playlistPlayIcon"></i>
+                        </button>
+                        <button class="playlist-action-btn" onclick="playNextTrack()" title="Lagu Berikutnya">
+                            <i class="fas fa-forward-step"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="music-list" id="playlistContainer">
+                    <div class="music-trigger active-track" id="trackCard0" onclick="playTrack(0, true)">
+                        <div class="music-trigger-icon"><i class="fas fa-heart"></i></div>
+                        <div class="music-trigger-content">
+                            <div class="music-title-line">
+                                <p class="music-title">Semua Aku Dirayakan ✨</p>
+                                <span class="track-badge">Lagu Utama</span>
+                            </div>
+                            <p class="music-artist">Nadin Amizah</p>
                         </div>
-                        <div class="fav-item clickable-img" onclick="openModal(this.querySelector('img'))">
-                            <img src="https://images.unsplash.com/photo-1572204292164-b35ba943fca7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                                alt="Sushi" data-title="Sushi Time 🍣"
-                                data-desc="Makanan yang gak pernah gagal bikin kamu happy walaupun lagi bete.">
-                            <p>Sushi</p>
+                        <div class="track-status-icon" id="trackStatus0">
+                            <i class="fas fa-volume-high"></i>
+                        </div>
+                    </div>
+
+                    <div class="music-trigger" id="trackCard1" onclick="playTrack(1, true)">
+                        <div class="music-trigger-icon"><i class="fas fa-star"></i></div>
+                        <div class="music-trigger-content">
+                            <div class="music-title-line">
+                                <p class="music-title">you! — LANY ✨</p>
+                                <span class="track-badge">Favorit Spesial</span>
+                            </div>
+                            <p class="music-artist">LANY</p>
+                        </div>
+                        <div class="track-status-icon" id="trackStatus1">
+                            <i class="fas fa-music"></i>
                         </div>
                     </div>
                 </div>
 
-                <button class="primary-btn back-btn mt-4" onclick="nextScreen('fav-slide', 'menu-screen')"><i
-                        class="fas fa-arrow-left"></i> Kembali ke Menu</button>
+                <!-- Favorite Things Grid -->
+                <h3 class="subsection-title mt-4"><i class="fas fa-heart"></i> Hal-Hal Kesukaanmu</h3>
+                <div class="fav-items-grid">
+                    
+                </div>
+
+                <button class="primary-btn back-btn" onclick="nextScreen('fav-slide', 'menu-screen')">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                </button>
             </div>
         </section>
 
-        <!-- Image Modal -->
-        <div id="imageModal" class="modal hidden">
+        <!-- ==========================================
+             LIGHTBOX MODAL (MOBILE PHOTO VIEWER)
+             ========================================== -->
+        <div id="imageModal" class="modal hidden" onclick="handleModalBackdrop(event, 'imageModal')">
             <div class="modal-content glassmorphism">
-                <span class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></span>
+                <button class="close-modal" onclick="closeModal()" title="Tutup"><i class="fas fa-times"></i></button>
                 <div class="modal-body">
-                    <img id="modalImage" src="" alt="Modal Image">
+                    <div class="modal-img-container">
+                        <button class="lightbox-nav-btn prev-btn" onclick="prevPhoto(event)" title="Foto Sebelumnya"><i
+                                class="fas fa-chevron-left"></i></button>
+                        <img id="modalImage" src="" alt="Modal Image">
+                        <button class="lightbox-nav-btn next-btn" onclick="nextPhoto(event)" title="Foto Berikutnya"><i
+                                class="fas fa-chevron-right"></i></button>
+                    </div>
                     <div class="modal-desc-container">
+                        <span class="modal-counter" id="modalCounter">Foto 1 dari 8</span>
                         <h3 id="modalTitle">Memory Title</h3>
                         <p id="modalDesc">Description goes here...</p>
                     </div>
@@ -259,24 +539,32 @@
             </div>
         </div>
 
-        <!-- Music Modal -->
-        <div id="musicModal" class="modal hidden">
-            <div class="modal-content glassmorphism" style="text-align: center;">
-                <span class="close-modal" onclick="closeMusicModal()"><i class="fas fa-times"></i></span>
-                <h3 class="modal-title-music" id="musicModalTitle">Now Playing</h3>
+        <!-- ==========================================
+             MUSIC PLAYER MODAL WITH LYRICS & VINYL
+             ========================================== -->
+        <div id="musicModal" class="modal hidden" onclick="handleModalBackdrop(event, 'musicModal')">
+            <div class="modal-content glassmorphism music-modal-box" style="text-align: center;">
+                <button class="close-modal" onclick="closeMusicModal()" title="Tutup"><i
+                        class="fas fa-times"></i></button>
+                <h3 class="section-title mb-0" id="musicModalTitle">Semua Aku Dirayakan</h3>
+                <p class="modal-artist-text" id="musicModalArtist">Nadin Amizah</p>
 
                 <div class="music-tabs">
-                    <button id="btnVinyl" class="tab-btn active" onclick="toggleMusicView('vinyl')"><i
-                            class="fas fa-compact-disc"></i> Player</button>
-                    <button id="btnLyrics" class="tab-btn" onclick="toggleMusicView('lyrics')"><i
-                            class="fas fa-align-center"></i> Lirik</button>
+                    <button id="btnVinyl" class="tab-btn active" onclick="toggleMusicView('vinyl')">
+                        <i class="fas fa-compact-disc"></i> Player
+                    </button>
+                    <button id="btnLyrics" class="tab-btn" onclick="toggleMusicView('lyrics')">
+                        <i class="fas fa-align-center"></i> Lirik Lagu
+                    </button>
                 </div>
 
                 <div id="vinylView" class="view-section active-view">
-                    <div class="vinyl-container">
-                        <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                            alt="Vinyl" class="vinyl-record" id="vinylRecord">
-                        <div class="vinyl-hole"></div>
+                    <div class="turntable-view-container">
+                        <div class="vinyl-platter">
+                            <img src="foto-utama.webp"
+                                alt="Vinyl" class="vinyl-record" id="modalVinylRecord">
+                            <div class="vinyl-hole"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -286,13 +574,36 @@
                     </div>
                 </div>
 
-                <audio controls class="fav-audio mt-4" id="favAudioPlayer">
-                    Browser Anda tidak mendukung pemutar audio.
-                </audio>
+                <!-- Custom Modal Music Player Controls -->
+                <div class="modal-player-bar">
+                    <div class="player-scrubber-wrap">
+                        <span class="time-stamp" id="modalCurrentTime">0:00</span>
+                        <div class="progress-track" id="modalProgressTrack" onclick="seekAudio(event)" title="Geser durasi">
+                            <div class="progress-filled" id="modalProgressFill"></div>
+                        </div>
+                        <span class="time-stamp" id="modalDuration">0:00</span>
+                    </div>
+
+                    <div class="modal-btn-row">
+                        <button class="modal-ctrl-btn" id="modalShuffleBtn" onclick="toggleShuffle()" title="Putar Acak (Shuffle)">
+                            <i class="fas fa-shuffle"></i>
+                        </button>
+                        <button class="modal-ctrl-btn" onclick="playPrevTrack()" title="Lagu Sebelumnya">
+                            <i class="fas fa-backward-step"></i>
+                        </button>
+                        <button class="modal-ctrl-btn play-circle-btn" id="modalPlayPauseBtn" onclick="toggleAmbientMusic()" title="Putar / Jeda">
+                            <i class="fas fa-play" id="modalPlayIcon"></i>
+                        </button>
+                        <button class="modal-ctrl-btn" onclick="playNextTrack()" title="Lagu Berikutnya">
+                            <i class="fas fa-forward-step"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
+    <!-- Application Script -->
     <script src="script.js"></script>
 </body>
 
