@@ -219,8 +219,8 @@ const errorMsg = document.getElementById('errorMessage');
 const wrongMessages = [
     "Kode rahasianya salah ayanggggg... 🥺 Coba tebak lagi ya!",
     "Tetot! Masih salah nih.. Masa lupa tanggal spesial kita? 😜",
-    "Aduh salah lagi 🥺 Clue: Tanggal jadian/spesial kita ❤️",
-    "Masih belum tepat cintaa.. Jangan menyerah, coba lagi! 💕"
+    "Aduh salah lagi 🥺 Clue: Tanggal jadian/spesial kitaa ❤️",
+    "Masih belum tepat cintaaa.. Jangan menyerah, coba lagi! 💕"
 ];
 
 function updateDots() {
