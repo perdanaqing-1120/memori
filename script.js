@@ -16,7 +16,7 @@ const playlist = [
         id: 'nadin',
         title: 'Semua Aku Dirayakan',
         artist: 'Nadin Amizah',
-        src: 'semua-aku-dirayakan.mp3',
+        src: 'https://files.catbox.moe/5aovjj.mp3',
         cover: 'foto-utama.webp',
         badge: 'Lagu Utama',
         lyrics: '🎵 <b>Semua Aku Dirayakan — Nadin Amizah</b><br><br><i>"Hatiku seberat dunia, namun kau rengkuh seadanya..."</i><br><br>Katakan padaku semua yang kau tahu<br>Tentang duniaku yang mungkin kau ragu<br>Biar kutahu bahwa kau sungguh-sungguh<br>Merayakan aku seutuhnya...<br><br>Terima kasih telah merayakanku,<br>Dengan segala lebih dan kurangku. ❤️'
@@ -25,7 +25,7 @@ const playlist = [
         id: 'lany',
         title: 'you! — LANY',
         artist: 'LANY',
-        src: 'you-lany.mp3',
+        src: 'https://files.catbox.moe/t0r6t3.mp3',
         cover: 'foto-utama.webp',
         badge: 'Favorit Spesial',
         lyrics: '🎵 <b>you! — LANY</b><br><br><i>"Like water in the desert, impossible to find<br>You found me when I was broken, put me back together, gave me life...<br><br>One in a million, my miracle<br>Out of the blue, you saved my soul<br><br>It\'s you, it\'s always been you<br>If I\'m ever gonna fall in love, I know it\'s gon\' be you<br>It\'s you, it\'s always been you<br>Met a lot of people, but nobody feels like you...<br><br>So, hot summer, cold winter<br>Through every storm, you\'re my shelter<br>It\'s you, it\'s always been you! ❤️"</i>'
@@ -329,8 +329,7 @@ function playTrack(index, openModal = false) {
     if (isAmbientSynthPlaying) stopAmbientSynth();
 
     if (bgMusic) {
-        const currentSrc = bgMusic.src ? bgMusic.src.split('/').pop() : '';
-        if (currentSrc !== track.src) {
+        if (!bgMusic.src || !bgMusic.src.includes(track.src.split('/').pop())) {
             bgMusic.src = track.src;
         }
 
